@@ -2,7 +2,7 @@ To perform the query processing on databases for different retrieval results of 
 •	To retrieve the location of a particular match conducted by its MatchID
 •	To retrieve the Players detail whose name start with ‘A’.
 •	Add a column Batting and Bowling in Player table.
-•	To count the number of right-hand batsman in a team.
+•	To count the number of right-hand batsmans in a team.
 •	To display the CricketBoard details for the BoardIDs 'BID01', 'BID03', and 'BID06'.
 •	To select the names and IDs of players who are left-hand bowlers.
 •	To find the UmpireID of umpires who have not umpired any match.
