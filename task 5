@@ -1,0 +1,93 @@
+🔍 Definition
+
+A SQL JOIN is used to combine rows from two or more tables based on a common column between them.
+It retrieves data that is related logically between multiple tables.
+
+🧩 Basic Syntax
+SELECT columns_from_both_tables
+FROM table1
+JOIN table2
+ON table1.column1 = table2.column2;
+
+
+Explanation:
+
+table1 and table2 → Tables you want to join
+
+column1 and column2 → Common columns between the two tables
+
+The ON keyword specifies the matching condition
+
+Example 1 — Join Two Tables Based on a Common Column
+
+Tables:
+
+Customers Table
+customer_id	first_name
+1	John
+2	Mary
+3	Bob
+Orders Table
+order_id	customer	item	amount
+101	1	Laptop	1200
+102	2	Phone	700
+103	3	Tablet	900
+Query
+SELECT Customers.customer_id, Customers.first_name, Orders.item
+FROM Customers
+JOIN Orders
+ON Customers.customer_id = Orders.customer;
+
+
+✅ Explanation:
+This joins the Customers and Orders tables using the customer_id column.
+
+🧾 Result:
+
+customer_id	first_name	item
+1	John	Laptop
+2	Mary	Phone
+3	Bob	Tablet
+Example 2 — Join With WHERE Clause
+SELECT Customers.customer_id, Customers.first_name, Orders.amount
+FROM Customers
+JOIN Orders
+ON Customers.customer_id = Orders.customer
+WHERE Orders.amount >= 800;
+
+
+✅ Explanation:
+This returns only those customers whose order amount ≥ 800.
+
+🧾 Result:
+
+customer_id	first_name	amount
+1	John	1200
+3	Bob	900
+JOIN Multiple Tables
+
+You can join three or more tables by chaining JOIN operations.
+
+Example 3 — Joining Three Tables
+
+Let’s add a Shippings table.
+
+shipping_id	customer	status
+1	1	Delivered
+2	2	Pending
+3	3	Shipped
+SELECT Customers.first_name, Orders.item, Shippings.status
+FROM Customers
+JOIN Orders ON Customers.customer_id = Orders.customer
+JOIN Shippings ON Customers.customer_id = Shippings.customer;
+
+
+🧾 Result:
+
+first_name	item	status
+John	Laptop	Delivered
+Mary	Phone	Pending
+Bob	Tablet	Shipped
+
+✅ Explanation:
+This joins three tables based on matching customer_id (or customer) fields and retrieves columns from all of them.
