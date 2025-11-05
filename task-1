@@ -1,1 +1,17 @@
+Steps for converting the ER diagram to the table
+1.	Entity type becomes a table 
+each entity type in the ER diagram becomes a table in the relational model.
+From the ER diagram, the main entity types are:
+•	STUDENT
+•	LECTURER
+•	COURSE
+•	SUBJECTS
+Each of these will be represented as a separate table in your relational database design.
+For example:
+•	The STUDENT entity becomes the STUDENT table.
+•	The LECTURER entity becomes the LECTURER table.
+•	The COURSE entity becomes the COURSE table.
+•	The SUBJECTS entity becomes the SUBJECT table.
+Each table will then contain columns that represent that entity's attributes (fields such as STUDENT_ID, STUDENT_NAME for the STUDENT table, and so on).
+STUDENT
 
