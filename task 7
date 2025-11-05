@@ -1,0 +1,41 @@
+AIM: To understand and implement Triggers, Views, and Exception Handling for managing CRUD operations in an Oracle database.
+Part 0: Setup (Base Tables)
+Before starting, create base tables to work with.
+DROP TABLE students CASCADE CONSTRAINTS;
+DROP TABLE departments CASCADE CONSTRAINTS;
+-- Drop tables if they already exist
+DROP TABLE student_log CASCADE CONSTRAINTS;
+
+-- Create departments table
+CREATE TABLE departments (
+    dept_id      NUMBER PRIMARY KEY,
+    dept_name    VARCHAR2(50),
+    hod_name     VARCHAR2(50)
+);
+
+-- Create students table
+CREATE TABLE students (
+    student_id   NUMBER PRIMARY KEY,
+    student_name VARCHAR2(50),
+    age          NUMBER,
+    dept_id      NUMBER,
+    marks        NUMBER(5,2),
+    CONSTRAINT fk_dept FOREIGN KEY (dept_id) REFERENCES departments(dept_id)
+);
+________________________________________
+Part 1: Implementing Triggers
+1. Prevent Insertion of Underage Students
+Create a trigger that prevents inserting students under 18 years old.
+CREATE OR REPLACE TRIGGER trg_prevent_underage_students
+BEFORE INSERT ON students
+FOR EACH ROW
+BEGIN
+    IF :NEW.age < 18 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Student must be at least 18 years old.');
+    END IF;
+END;
+/
+✅ Test:
+INSERT INTO students VALUES (1, 'Alex', 17, NULL, 85);
+-- Should raise error: Student must be at least 18 years old
+________________________________________
