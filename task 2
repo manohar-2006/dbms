@@ -1,0 +1,17 @@
+.a Identify the Specificity of Each Relationship and Form Surplus Relations
+Entities and Relationships
+Relationship	Type	Description
+Student is-a Person	IS-A	Specialization of Person
+Professor is-a Person	IS-A	Specialization of Person
+Professor teaches Course	HAS-A	Each course is taught by one professor
+Student enrolls in Course	Many-to-Many	Students can take multiple courses
+Course belongs to Department	HAS-A	A department offers many courses
+Surplus Relationships
+
+Some relationships can be derived (do not need explicit storage):
+
+Derived Relationship	Derived From	Status
+Student → Department	Student → Course + Course → Department	Surplus (derived)
+Professor → Department	Professor teaches Course in Department	Surplus (derived)
+
+✅ Therefore, only core relationships are stored explicitly.
