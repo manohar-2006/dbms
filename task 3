@@ -1,0 +1,17 @@
+To perform the query processing on databases for different retrieval results of queries using DML, DRL operations using aggregate, date, string, indent functions, set clauses and operators.
+•	To retrieve the location of a particular match conducted by its MatchID
+•	To retrieve the Players detail whose name start with ‘A’.
+•	Add a column Batting and Bowling in Player table.
+•	To count the number of right-hand batsman in a team.
+•	To display the CricketBoard details for the BoardIDs 'BID01', 'BID03', and 'BID06'.
+•	To select the names and IDs of players who are left-hand bowlers.
+•	To find the UmpireID of umpires who have not umpired any match.
+
+CricketBoard:
+BoardID	Name	Address	Contact_No
+BID01	Chennai Cricket Board	Chennai	9988776699
+BID02	Tiruvallur Cricket Board	Chennai	9977886699
+BID03	Viluppuram Cricket Board	Viluppuram	9966886699
+BID04	Trichy Cricket Board	Trichy	9955886699
+BID05	Madurai Cricket Board	Madurai	9944886699
+BID06	Tuticorin Cricket Board	Tuticorin	9933886699
