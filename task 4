@@ -1,0 +1,28 @@
+Aim:
+	To perform the advanced query processing and test its heuristics using designing of optimal correlated and nested sub queries such as finding summary statistics.
+1.	To retrieve all team details, including the count of winning matches for each team
+2.	To retrieve the total number of 'Tie' matches in a team-wise manner.
+3.	To retrieve the team details who won the matches.
+4.	To retrieve players and match details of players who are above 25 years old. 
+5.	To retrieve the details of Team who have not played any matches.
+6.	To retrieve the teamid, boardid, teamname, and playername for a particular playerid given.
+
+
+4.1	To retrieve all team details, including the count of winning matches for each team.
+
+SQL> SELECT t.TeamID, t.Name AS TeamName, t.Coach, t.Captain, COUNT(m.MatchID) AS WinningMatchCount FROM Team t LEFT JOIN Match m ON t.TeamID = substr(m.result,1,5) GROUP BY t.TeamID, t.Name, t.Coach, t.Captain;
+
+Output:
+
+TeamID	TeamName	Coach	Captain	WinningMatchCount
+CCB01	ABS EXPRESS	G.D.RAMESH	SAMPATH KUMAR	1
+CCB02	AVG EXPRESS	T.KARTHIK	Y.JOHN	0
+MCB01	PANTHER	SARAVANAN	R.SUNILKUMAR	0
+SCB01	EAGLE	SOMU	SRI HARI	0
+TCB01	ANGRY BARD	TOM BABU	CINIL JOHN	2
+TCB02	TIGER ROCK	S.KANNAN	BEN GEORGE	0
+TICB01	KINGS	D ANAND	MATHAN	0
+TRICB01	ROCK	K.PAUL	K.MUTHU	0
+TUCB01	THUNDER	D ALEX	BARATHI	0
+VCB01	RAINBOW	S.RAJESHKUMAR	MANIMARAN	0
+
