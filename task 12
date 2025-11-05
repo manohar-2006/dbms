@@ -1,0 +1,159 @@
+1. AIM / OBJECTIVE
+Primary Aim:
+To design and implement a comprehensive database management system for hotel reservation operations that efficiently manages guest bookings, room inventory, payments, and additional services while maintaining data integrity and generating business insights.
+Specific Objectives:
+Guest Management
+
+Register and maintain guest profiles with complete contact and identification details
+Track guest booking history and loyalty status
+Ensure data security and privacy compliance
+
+
+Room & Inventory Management
+
+Maintain accurate room availability across multiple hotel properties
+Track room types, pricing, and amenities
+Monitor room status (Available, Occupied, Maintenance, Reserved)
+
+
+Booking Operations
+Process room reservations with date validation
+Calculate total charges based on duration and room rates
+Handle booking modifications and cancellations
+Prevent double-booking conflicts
+Payment Processing
+Record multiple payment methods (Cash, Card, UPI, etc.)
+Track payment status (Pending, Partial, Completed)
+Generate payment receipts and transaction records
+
+
+Service Management
+Offer additional services (Food, Spa, Laundry, Transport)
+Track service utilization per booking
+Calculate total charges including services
+
+
+Business Intelligence
+Generate revenue reports by hotel, room type, and time period
+Analyze occupancy rates and booking patterns
+Identify top guests and popular services
+Support management decision-making with data insights
+ER Diagram - Textual Description
+ENTITIES:
+
+GUEST (Strong Entity)
+Primary Key: guest_id
+Attributes: first_name, last_name, email, phone, address, city, id_proof_type, id_proof_number, registration_date
+
+
+HOTEL (Strong Entity)
+Primary Key: hotel_id
+Attributes: hotel_name, address, city, state, phone, email, star_rating, total_rooms
+
+
+ROOM (Strong Entity)
+Primary Key: room_id
+Foreign Key: hotel_id
+Attributes: room_number, room_type, price_per_night, max_occupancy, floor_number, status, amenities
+
+
+BOOKING (Strong Entity)
+Primary Key: booking_id
+Foreign Keys: guest_id, room_id
+Attributes: check_in_date, check_out_date, booking_date, number_of_guests, total_amount, booking_status, payment_status, special_requests
+
+
+PAYMENT (Strong Entity)
+
+Primary Key: payment_id
+Foreign Key: booking_id
+Attributes: payment_date, amount, payment_method, transaction_id, payment_status
+
+SERVICE (Strong Entity)
+Primary Key: service_id
+Attributes: service_name, service_type, price, description
+BOOKING_SERVICES (Junction/Bridge Entity)
+Primary Key: booking_service_id
+Foreign Keys: booking_id, service_id
+Attributes: quantity, service_date, total_price
+RELATIONSHIPS:
+
+Guest → Booking (1:N)
+
+One guest can make multiple bookings
+Each booking belongs to exactly one guest
+Cardinality: 1:N
+Participation: Partial (guest can exist without booking)
+
+
+Room → Booking (1:N)
+
+One room can have multiple bookings over time
+Each booking is for exactly one room
+Cardinality: 1:N
+Participation: Partial (room can exist without booking)
+
+Hotel → Room (1:N)
+
+One hotel has multiple rooms
+Each room belongs to exactly one hotel
+Cardinality: 1:N
+Participation: Total (room must belong to a hotel)
+
+
+Booking → Payment (1:N)
+
+One booking can have multiple payments (installments)
+Each payment is for exactly one booking
+Cardinality: 1:N
+Participation: Partial (booking can exist without payment initially)
+
+Booking ↔ Service (M:N)
+
+One booking can include multiple services
+One service can be used in multiple bookings
+Cardinality: M:N
+Resolved by: BOOKING_SERVICES junction table
+Participation: Partial (booking can exist without services)
+-- Table 1: Guest
+CREATE TABLE Guest (
+    guest_id INT PRIMARY KEY AUTO_INCREMENT,
+    first_name VARCHAR(50) NOT NULL,
+    last_name VARCHAR(50) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    address TEXT,
+    city VARCHAR(50),
+    id_proof_type ENUM('Aadhar', 'Passport', 'Driving License', 'Voter ID') NOT NULL,
+    id_proof_number VARCHAR(50) UNIQUE NOT NULL,
+    registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Table 2: Hotel
+CREATE TABLE Hotel (
+    hotel_id INT PRIMARY KEY AUTO_INCREMENT,
+    hotel_name VARCHAR(100) NOT NULL,
+    address TEXT NOT NULL,
+    city VARCHAR(50) NOT NULL,
+    state VARCHAR(50) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    email VARCHAR(100),
+    star_rating DECIMAL(2,1) CHECK (star_rating BETWEEN 1.0 AND 5.0),
+    total_rooms INT NOT NULL
+);
+
+-- Table 3: Room
+CREATE TABLE Room (
+    room_id INT PRIMARY KEY AUTO_INCREMENT,
+    hotel_id INT NOT NULL,
+    room_number VARCHAR(10) NOT NULL,
+    room_type ENUM('Single', 'Double', 'Suite', 'Deluxe', 'Presidential') NOT NULL,
+    price_per_night DECIMAL(10,2) NOT NULL,
+    max_occupancy INT NOT NULL,
+    floor_number INT,
+    status ENUM('Available', 'Occupied', 'Maintenance', 'Reserved') DEFAULT 'Available',
+    amenities TEXT,
+    FOREIGN KEY (hotel_id) REFERENCES Hotel(hotel_id) ON DELETE CASCADE,
+    UNIQUE(hotel_id, room_number)
+);
+
